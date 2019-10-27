@@ -1,4 +1,4 @@
-FROM scratch
+FROM alpine:latest
 
 ARG BUILD_RFC3339="1970-01-01T00:00:00Z"
 ARG COMMIT="local"
@@ -20,3 +20,17 @@ LABEL org.opencontainers.image.ref.name="jnovack/flexget" \
 ENV BUILD_RFC3339 "$BUILD_RFC3339"
 ENV COMMIT "$COMMIT"
 ENV VERSION "$VERSION"
+
+RUN mkdir /opt/flexget && \
+    apk add --update --no-cache python3 ca-certificates && \
+    pip3 install --no-cache-dir --upgrade pip flexget transmissionrpc
+
+# This hack is widely applied to avoid python printing issues in docker containers.
+# See: https://github.com/Docker-Hub-frolvlad/docker-alpine-python3/pull/13
+ENV PYTHONUNBUFFERED=1
+
+VOLUME /opt/flexget
+WORKDIR /opt/flexget
+
+ENTRYPOINT [ "/entrypoint.sh" ]
+COPY entrypoint.sh /
