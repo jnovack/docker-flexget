@@ -1,14 +1,15 @@
+include variables.mk
+
+# Only necessary for Go projects
+# include go.mk
+
 .PHONY: build all
 .DEFAULT_GOAL := all
 
-IMAGE?=jnovack/flexget
-TAG?=dev
-
 all: build
 
+test:
+	# Make your own tests
+
 build:
-	docker build \
-		--build-arg BUILD_RFC3339=$(date -u +"%Y-%m-%dT%H:%M:%SZ") \
-		--build-arg COMMIT=$(git rev-parse --short HEAD) \
-		--build-arg VERSION=$(git describe --tags --always) \
-		-t $(IMAGE):$(TAG) .
+	# Make your own build statements
