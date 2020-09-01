@@ -7,7 +7,7 @@ if [ -f /opt/flexget/config.yml ]; then
     echo "$(date '+%Y-%m-%d %H:%m') INIT     Using existing config.yml"
 else
     echo "$(date '+%Y-%m-%d %H:%m') FATAL    config.yml not found in /opt/flexget"
-    exit
+    exit 1
 fi
 
 # PUID and PGUID
